@@ -86,8 +86,26 @@ export default function LazyAds() {
       });
     }
     else if( event === 'scroll' ) {
+
+      // Flag
+      let waiting = false;
+
       document.addEventListener(event, function() {
+
+        if( waiting ) {
+          return;
+        }
+
+        waiting = true;
+
         loadAd();
+        console.log('Sroll Now');
+
+        // Set execution time on scroll event to 300ms
+        setTimeout(function() {
+          waiting = false;
+        }, 250);
+
       });
     }
 

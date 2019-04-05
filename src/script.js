@@ -77,7 +77,7 @@ export default function LazyAds() {
    * @param  {Function} callback Function to run.
    * @return {Null}
    */
-  const eventHandler = function(event = 'DOMContentLoaded') {
+  const eventHandler = function(event) {
 
     if( event === 'DOMContentLoaded' ) {
       document.addEventListener(event, function() {
@@ -99,7 +99,6 @@ export default function LazyAds() {
         waiting = true;
 
         loadAd();
-        console.log('Sroll Now');
 
         // Set execution time on scroll event to 300ms
         setTimeout(function() {
@@ -140,21 +139,39 @@ export default function LazyAds() {
    * @param  {Node element} target Node element where to insert JavaScript.
    * @return {Promise}             Returns new Promise when file is loaded.
    */
-  const loadJs = function(url, target) {
+  const loadJs = function(content, target) {
 
-    // Create new <script> element and set its source and type.
-    // Then insert it.
-    let script = document.createElement('script');
-    script.setAttribute('src', url);
-    script.setAttribute('type', 'text/javascript');
-    target.appendChild(script);
+    // Get all scripts to load
+    content = Array.from( content.split(','));
+    // Create const array of all provided urls
+    const urls = [];
 
-    // Returns Promise. After load, we can use it.
-    // (In this case, load it and show AD).
-    return new Promise(function(resolve, reject) {
-      script.onload = resolve;
-      script.onreadystatechange = resolve;
-    });
+    // Push urls to array
+    if( content.length > 1 ) {
+      content.map(function(url) {
+        urls.push( url.trim() );
+      });
+    }
+    else {
+      urls.push(content[0]);
+    }
+
+    // Loop throgh them and everyone load asynchronously
+    for( let i = 0; i < urls.length; i++ ) {
+
+      let script = document.createElement('script');
+      script.setAttribute('src', urls[i]);
+      script.setAttribute('type', 'text/javascript');
+      target.appendChild(script);
+
+      // Returns Promise. After load, we can use it.
+      // (In this case, load it and show AD).
+      return new Promise(function(resolve, reject) {
+        script.onload = resolve;
+        script.onreadystatechange = resolve;
+      });
+
+    }
 
   };
 

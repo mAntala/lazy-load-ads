@@ -69,7 +69,7 @@ export default function LazyAds() {
     }
     return null;
 
-  }
+  };
 
   /**
    * Handle provided event.
@@ -110,7 +110,7 @@ export default function LazyAds() {
 
     return null;
 
-  }
+  };
 
   /**
    * Load AD from JavaScript file.
@@ -178,6 +178,6 @@ export default function LazyAds() {
   return {
     eventHandler,
     loadAd
-  }
+  };
 
 }

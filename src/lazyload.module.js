@@ -141,37 +141,17 @@ export default function LazyAds() {
    */
   const loadJs = function(content, target) {
 
-    // Get all scripts to load
-    content = Array.from( content.split(','));
-    // Create const array of all provided urls
-    const urls = [];
+    let script = document.createElement('script');
+    script.setAttribute('src', content);
+    script.setAttribute('type', 'text/javascript');
+    target.appendChild(script);
 
-    // Push urls to array
-    if( content.length > 1 ) {
-      content.map(function(url) {
-        urls.push( url.trim() );
-      });
-    }
-    else {
-      urls.push(content[0]);
-    }
-
-    // Loop throgh them and everyone load asynchronously
-    for( let i = 0; i < urls.length; i++ ) {
-
-      let script = document.createElement('script');
-      script.setAttribute('src', urls[i]);
-      script.setAttribute('type', 'text/javascript');
-      target.appendChild(script);
-
-      // Returns Promise. After load, we can use it.
-      // (In this case, load it and show AD).
-      return new Promise(function(resolve, reject) {
-        script.onload = resolve;
-        script.onreadystatechange = resolve;
-      });
-
-    }
+    // Returns Promise. After load, we can use it.
+    // (In this case, load it and show AD).
+    return new Promise(function(resolve, reject) {
+      script.onload = resolve;
+      script.onreadystatechange = resolve;
+    });
 
   };
 

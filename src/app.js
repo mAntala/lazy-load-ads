@@ -1,4 +1,4 @@
-import LazyAds from './script';
+import LazyAds from './lazyload.module';
 
 window._L = LazyAds();
 _L.eventHandler('DOMContentLoaded');

@@ -24,8 +24,8 @@ export default function LazyAds() {
    * Checks if device's width is lower than 767px (mobile, small tabler).
    * @return {Boolean} True or False.
    */
-  const isMobile = function() {
-    return window.innerWidth <= 767 ? true : false;
+  const isMobile = () => {
+    return window.innerWidth <= 767;
   };
 
   /**
@@ -33,7 +33,7 @@ export default function LazyAds() {
    * @param  {Node list} elements Node list of elements to include to map.
    * @return {Null}
    */
-  const createMap = function(elements) {
+  const createMap = (elements) => {
 
     // If is mobile, include all elements marked as 'mobile'
     if( isMobile() ) {
@@ -77,7 +77,7 @@ export default function LazyAds() {
    * @param  {Function} callback Function to run.
    * @return {Null}
    */
-  const eventHandler = function(event) {
+  const eventHandler = (event) => {
 
     if( event === 'DOMContentLoaded' ) {
       document.addEventListener(event, function() {
@@ -116,7 +116,7 @@ export default function LazyAds() {
    * Load AD from JavaScript file.
    * @return {Null}
    */
-  const loadAd = function() {
+  const loadAd = () => {
 
     for( let el of map) {
 
@@ -139,7 +139,7 @@ export default function LazyAds() {
    * @param  {Node element} target Node element where to insert JavaScript.
    * @return {Promise}             Returns new Promise when file is loaded.
    */
-  const loadJs = function(content, target) {
+  const loadJs = (content, target) => {
 
     let script = document.createElement('script');
     script.setAttribute('src', content);
@@ -148,7 +148,7 @@ export default function LazyAds() {
 
     // Returns Promise. After load, we can use it.
     // (In this case, load it and show AD).
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
       script.onload = resolve;
       script.onreadystatechange = resolve;
     });
